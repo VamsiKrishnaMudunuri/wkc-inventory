@@ -4,3 +4,4 @@ deployment:
     - export DEPLOYPATH=/home/cl6qjm9fadtw/public_html/wkc.vamsi.ca/public
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp style.css $DEPLOYPATH
+
