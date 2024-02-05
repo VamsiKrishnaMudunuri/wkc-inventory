@@ -182,7 +182,7 @@
 					</div>
 
 					<div class="wrap-input100" data-validate="Enter password" autocomplete="off">
-					<label style="margin-bottom: 0px;font-size: 18px; color:#f04d23;">Password</label>
+					<label style="margin-bottom: 0px;font-size: 18px; color:#f04d23;">assword</label>
 						<input class="input100" id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
 						{{-- <span class="focus-input100" data-placeholder="Password"></span> --}}
 
