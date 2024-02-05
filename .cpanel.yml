@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/cl6qjm9fadtw/public_html/wkc.vamsi.ca
+    - export DEPLOYPATH=/home/cl6qjm9fadtw/public_html/wkc.vamsi.ca/public
     - /bin/cp * $DEPLOYPATH
