@@ -1,7 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/example/public_html/
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp style.css $DEPLOYPATH
-    - /bin/cp -R images $DEPLOYPATH
+    - export DEPLOYPATH=/home/cl6qjm9fadtw/public_html/wkc.vamsi.ca
+    - /bin/cp * $DEPLOYPATH
