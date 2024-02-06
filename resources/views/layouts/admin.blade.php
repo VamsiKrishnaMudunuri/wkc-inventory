@@ -144,7 +144,7 @@
             <a href="#" class="nav-link @yield('title', $four_class_active ?? '')">
                 <i class="nav-icon fas fa-id-badge"></i>
                 <p>
-                Admin
+                Ad
                 <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
