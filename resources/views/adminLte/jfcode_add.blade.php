@@ -76,15 +76,6 @@
                     </div>
                   </div>
 
-                  {{-- <div class="row">
-                    <div class="col-sm-12">
-                      <!-- textarea -->
-                      <div class="form-group">
-                        <label>Message</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                      </div>
-                    </div>
-                  </div> --}}
 
                   <div class="row">
                     <div class="col-sm-12">
@@ -105,22 +96,37 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="row">
-                    <div class="col-sm-12">
+                      <div class="col-sm-12">
                       <!-- Select multiple-->
-                      <div class="form-group">
-                        <label>Exp Alert Duration</label>
-                        <select class="form-control">
-                          <option>SELECT</option>
-                          <option>7 Days</option>
-                          <option>10 Days</option>
-                          <option>30 Days</option>
-                          <option>90 Days</option>
-                        </select>
+                       <label for="exampleInputFile">Exp Alert Duration</label>
+
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">DAY'S</span>
+                                    </div>
+                                </div>
+                            </div>
                       </div>
-                    </div>
                   </div>
+                  <div class="row">
+                      <div class="col-sm-12">
+                      <!-- Select multiple-->
+                       <label for="exampleInputFile">Min Quantity Alert</label>
+
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">CS</span>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                  </div>
+
                   <div class="form-group">
                     <label for="exampleInputFile">Upload Image</label>
                     <div class="input-group">
