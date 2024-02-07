@@ -17,8 +17,8 @@
         <div class="col-md-3"> </div>
         <div class="col-md-6">
             <!-- general form elements disabled -->
-            <div class="card" >
-              <div class="card-header"style="background-color: #f04d23">
+            <div class="card">
+              <div class="card-header" style="background-color: #f04d23">
                 <h3 class="card-title" style="color:white;">Add Item</h3>
               </div>
               <!-- /.card-header -->
@@ -75,8 +75,6 @@
                       </div>
                     </div>
                   </div>
-
-
                   <div class="row">
                     <div class="col-sm-12">
                       <!-- select -->

@@ -34,6 +34,9 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
   <script>
+    $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
   $( function() {
     $( "#datepicker" ).datepicker({orientation: 'bottom'})
 .on('changeDate', function(ev){
@@ -59,6 +62,7 @@
             color: #fff;
         }
     </style>
+
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -144,7 +148,7 @@
             <a href="#" class="nav-link @yield('title', $four_class_active ?? '')">
                 <i class="nav-icon fas fa-id-badge"></i>
                 <p>
-                Ad
+                Admin
                 <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
@@ -310,6 +314,8 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 <!-- bootstrap datepicker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+
 <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 </body>
 </html>

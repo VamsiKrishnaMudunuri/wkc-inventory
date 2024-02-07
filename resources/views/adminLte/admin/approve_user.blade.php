@@ -58,7 +58,7 @@
                       </td>
                       <td>25-08-2020 16:30:28</td>
                       <td>
-                        <a class="btn btn-success btn-sm" href="#">
+                        <a onclick="saveDetails()" class="btn btn-success btn-sm" href="#">
                             <i class="fas fa-check"></i> Approve
                         </a>
                         <a class="btn btn-danger btn-sm" href="#">
@@ -82,5 +82,27 @@
       </div>
     </div><!-- /.container-fluid -->
   </section>
+  <script>
 
+    function saveDetails(){
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You want to approve the user?",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, approve!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                title: "Approved!",
+                text: "New user has been added.",
+                icon: "success"
+                });
+            }
+        });
+
+    };
+        </script>
   @endsection

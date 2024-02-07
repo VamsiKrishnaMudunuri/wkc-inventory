@@ -133,15 +133,15 @@
                       <td><input type="text" class="form-control" id="" name="to" placeholder="350" autocomplete="off"/></td>
                       <td>
                         <a class="btn btn-success btn-sm" href="#">
-                            <i class="fas fa-save"></i> Save
+                            <i class="fas fa-save"></i>
                         </a>
                         <a class="btn btn-primary btn-sm" href="#">
-                            <i class="fas fa-eye"></i> View
+                            <i class="fas fa-eye"></i>
                         </a>
                         <a class="btn btn-info btn-sm" href="#">
                         <i class="fas fa-print">
                         </i>
-                        Print
+
                         </a>
                       </td>
 
