@@ -82,6 +82,7 @@ Route::get('/make_entry', function () {
 });
 Route::get('/count_result', function () {
     return view('adminLte.audit.count_result');
+
 });
 
 

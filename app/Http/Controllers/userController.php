@@ -49,5 +49,6 @@ class userController extends Controller
     {
         $request->session()->flush();
         return redirect('/');
+
     }
 }
