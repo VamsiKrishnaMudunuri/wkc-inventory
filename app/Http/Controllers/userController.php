@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Exception;
 use Session;
 
-class userController extends Controller
+class UserController extends Controller
 {
     public function welcome(Request $request)
     {
