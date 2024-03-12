@@ -15,11 +15,11 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::post('/session', 'userController@addSession');
+Route::post('/session', 'UserController@addSession');
 
 Route::get('/welcome/{access_token}', 'UserController@welcome');
 
-Route::get('/logout', 'userController@logout');
+Route::get('/logout', 'UserController@logout');
 
 Route::get('/refridgerator', function () {
     return view('adminLte.refridgerator');
