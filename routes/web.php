@@ -14,6 +14,13 @@
 Route::get('/', function () {
     return view('login');
 });
+
+Route::post('/session', 'userController@addSession');
+
+Route::get('/welcome/{access_token}', 'UserController@welcome');
+
+Route::get('/logout', 'userController@logout');
+
 Route::get('/refridgerator', function () {
     return view('adminLte.refridgerator');
 });
@@ -32,9 +39,8 @@ Route::get('/2', function () {
 Route::get('/areas', function () {
     return view('adminLte.areas');
 });
-Route::get('/dashboard', function () {
-    return view('adminLte.dashboard');
-});
+Route::get('/dashboard/{access_token}', 'UserController@welcome');
+
 Route::get('/publish_form', function () {
     return view('adminLte.publish_form');
 });
@@ -77,6 +83,7 @@ Route::get('/make_entry', function () {
 Route::get('/count_result', function () {
     return view('adminLte.audit.count_result');
 });
+
 
 
 

@@ -52,6 +52,7 @@
   </script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+
     <style>
         .active{
             background-color: #f04d23 !important;
@@ -62,6 +63,11 @@
             color: #fff;
         }
     </style>
+    @php
+        if(empty($access_token)){
+            $access_token = Session::get('access_token');
+        }
+    @endphp
 
 <div class="wrapper">
 
@@ -102,7 +108,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-                <a href="scan_qr" class="nav-link @yield('title', $one_class_active ?? '')">
+                <a href="/scan_qr" class="nav-link @yield('title', $one_class_active ?? '')">
                   <i class="nav-icon fas fa-qrcode"></i>
                   <p>
                     Scan
@@ -110,8 +116,10 @@
                   </p>
                 </a>
               </li>
+              {{-- @if ($access_token == "receiver") --}}
           <li class="nav-item">
-            <a href="dashboard" class="nav-link @yield('title', $two_class_active ?? '')">
+
+            <a href="/dashboard/{{ $access_token }}" class="nav-link @yield('title', $two_class_active ?? '')">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Home
@@ -119,6 +127,8 @@
               </p>
             </a>
           </li>
+          {{-- @endif --}}
+          @if ($access_token == "audit" || $access_token == "admin")
           <li class="nav-item">
             <a href="#" class="nav-link @yield('title', $three_class_active ?? '')">
                 <i class="nav-icon fas fa-calculator"></i>
@@ -130,20 +140,21 @@
             <ul class="nav nav-treeview" style="display: @yield('title', $three_one_drop_active ?? '');">
 
                 <li class="nav-item">
-                    <a href="inventory_count" class="nav-link @yield('title', $three_two_class_active ?? '')">
+                    <a href="/inventory_count" class="nav-link @yield('title', $three_two_class_active ?? '')">
                         <i class="nav-icon fas fa-tasks"></i>
                         <p>Inventory Count</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="count_result" class="nav-link @yield('title', $three_three_class_active ?? '')">
+                    <a href="/count_result" class="nav-link @yield('title', $three_three_class_active ?? '')">
                         <i class="nav-icon fas fa-file"></i>
                         <p>Count Result</p>
                     </a>
                 </li>
             </ul>
           </li>
-
+          @endif
+          @if ($access_token == "admin")
           <li class="nav-item">
             <a href="#" class="nav-link @yield('title', $four_class_active ?? '')">
                 <i class="nav-icon fas fa-id-badge"></i>
@@ -154,62 +165,69 @@
             </a>
             <ul class="nav nav-treeview" style="display: @yield('title', $four_one_drop_active ?? '');">
                 <li class="nav-item">
-                    <a href="portal_users" class="nav-link @yield('title', $four_one_class_active ?? '')">
+                    <a href="/portal_users" class="nav-link @yield('title', $four_one_class_active ?? '')">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Portal Users</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="approve_user" class="nav-link @yield('title', $four_two_class_active ?? '')">
+                    <a href="/approve_user" class="nav-link @yield('title', $four_two_class_active ?? '')">
                         <i class="nav-icon fas fa-info-circle"></i>
                         <p>Approve User</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="requesters" class="nav-link @yield('title', $four_three_class_active ?? '')"">
+                    <a href="/requesters" class="nav-link @yield('title', $four_three_class_active ?? '')"">
                         <i class="nav-icon fas fa-user-plus"></i>
                         <p>Requesters</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="approval_team" class="nav-link @yield('title', $four_four_class_active ?? '')"">
+                    <a href="/approval_team" class="nav-link @yield('title', $four_four_class_active ?? '')"">
                         <i class="nav-icon fas fa-check-square"></i>
                         <p>Disposal Approvals Team</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="adjust_inventory" class="nav-link @yield('title', $four_five_class_active ?? '')">
+                    <a href="/adjust_inventory" class="nav-link @yield('title', $four_five_class_active ?? '')">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>Adjust Inventory</p>
                     </a>
                 </li>
             </ul>
           </li>
+          @endif
+          @if ($access_token == "requester" || $access_token == "admin")
           <li class="nav-item">
-            <a href="request" class="nav-link @yield('title', $fivee_class_active ?? '')">
+            <a href="/request" class="nav-link @yield('title', $fivee_class_active ?? '')">
               <i class="nav-icon fas fa-bullhorn"></i>
               <p>
                 Request Inventory
               </p>
             </a>
           </li>
+          @endif
+          @if ($access_token == "receiver")
           <li class="nav-item">
-            <a href="make_entry" class="nav-link @yield('title', $five_class_active ?? '')">
+            <a href="/make_entry" class="nav-link @yield('title', $five_class_active ?? '')">
               <i class="nav-icon fas fa-cubes"></i>
               <p>
                 Make An Entry
               </p>
             </a>
           </li>
+          @endif
+          @if ($access_token == "receiver" || $access_token == "admin")
           <li class="nav-item">
-            <a href="production_requests" class="nav-link @yield('title', $fiveee_class_active ?? '')">
+            <a href="/production_requests" class="nav-link @yield('title', $fiveee_class_active ?? '')">
               <i class="nav-icon fas fa-bell"></i>
               <p>
                 Production Requests
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a href="#" class="nav-link @yield('title', $six_class_active ?? '')">
                 <i class="nav-icon fas fa-sitemap"></i>
@@ -220,13 +238,13 @@
             </a>
             <ul class="nav nav-treeview" style="display:  @yield('title', $six_one_drop_active ?? '');">
             <li class="nav-item">
-            <a href="jfcode_list" class="nav-link @yield('title', $six_one_class_active ?? '')">
+            <a href="/jfcode_list" class="nav-link @yield('title', $six_one_class_active ?? '')">
             <i class="far fa-circle nav-icon"></i>
             <p>List</p>
             </a>
             </li>
             <li class="nav-item">
-            <a href="jfcode_add" class="nav-link @yield('title', $six_two_class_active ?? '')">
+            <a href="/jfcode_add" class="nav-link @yield('title', $six_two_class_active ?? '')">
             <i class="far fa-circle nav-icon"></i>
             <p>Add</p>
             </a>
@@ -235,9 +253,9 @@
           </li>
 
 
-
+          @if ($access_token == "audit" || $access_token == "admin")
           <li class="nav-item">
-            <a href="inventory_data" class="nav-link @yield('title', $eight_class_active ?? '')">
+            <a href="/inventory_data" class="nav-link @yield('title', $eight_class_active ?? '')">
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Inventory Data
@@ -245,8 +263,10 @@
               </p>
             </a>
           </li>
+          @endif
+          @if ($access_token == "receiver" || $access_token == "admin" || $access_token == "requester")
           <li class="nav-item">
-            <a href="history" class="nav-link @yield('title', $seven_class_active ?? '')">
+            <a href="/history" class="nav-link @yield('title', $seven_class_active ?? '')">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 Activities
@@ -254,8 +274,9 @@
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/logout" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Sign Out
@@ -317,5 +338,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
 
 <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
 </body>
 </html>

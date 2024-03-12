@@ -123,7 +123,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<a href="/dashboard" class="login100-form-btn"  style="background-color: #f04d23;">
+							<a href="#" onclick="login(); return false;" class="login100-form-btn"  style="background-color: #f04d23;">
 								Login
                             </a>
 						</div>
@@ -266,5 +266,61 @@
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+<script>
+
+    function login(){
+        if(document.getElementById("password").value == "12345"){
+            if(document.getElementById("userName").value == "admin" || document.getElementById("userName").value == "audit" || document.getElementById("userName").value == "receiver" ||document.getElementById("requester").value == "requester"){
+
+                var jsonData = JSON.stringify({
+                'access_token': document.getElementById("userName").value
+                });
+                $.ajax({
+                url: '/session',
+                type: "POST",
+                data: jsonData,
+                contentType: 'application/json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    var reUrl = "/dashboard/"+document.getElementById("userName").value;
+                        window.location.href=reUrl;
+                },
+                error: function(xhr, textStatus, error) {
+                    Swal.fire({
+                        type: "error",
+                        title: "ERROR",
+                        text: xhr.responseJSON.error.message,
+                        animation: "slide-from-top",
+                        showConfirmButton: true
+                    }).then(function() {
+                        document.getElementById('submitButton')
+                            .removeAttribute("disabled")
+                    })
+                }
+                })
+
+
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Try Again..",
+                    text: "Wrong User Name / Password!"
+                });
+            }
+        } else {
+            Swal.fire({
+                    icon: "error",
+                    title: "Try Again..",
+                    text: "Wrong User Name / Password!"
+                });
+        }
+
+
+    }
+</script>
 </body>
 </html>
