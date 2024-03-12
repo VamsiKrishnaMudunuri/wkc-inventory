@@ -124,7 +124,7 @@
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<a href="/dashboard/admin"  return false;" class="login100-form-btn"  style="background-color: #f04d23;">
-								Login
+								Login Dev
                             </a>
 						</div>
 					</div>
