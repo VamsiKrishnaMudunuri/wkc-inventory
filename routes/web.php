@@ -36,6 +36,9 @@ Route::get('/milk', function () {
 Route::get('/2', function () {
     return view('adminLte.2');
 });
+Route::get('/3', function () {
+    return view('adminLte.3');
+});
 Route::get('/areas', function () {
     return view('adminLte.areas');
 });
@@ -49,6 +52,9 @@ Route::get('/jfcode_add', function () {
 });
 Route::get('/history', function () {
     return view('adminLte.history');
+});
+Route::get('/donation_history', function () {
+    return view('adminLte.donation_history');
 });
 Route::get('/jfcode_list', function () {
     return view('adminLte.jfcode_list');

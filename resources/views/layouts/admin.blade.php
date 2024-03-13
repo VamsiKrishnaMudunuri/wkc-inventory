@@ -68,6 +68,9 @@
             $access_token = Session::get('access_token');
         }
     @endphp
+    <script>
+        // alert("{{ Session::get('access_token') }}");
+    </script>
 
 <div class="wrapper">
 
@@ -176,12 +179,12 @@
                         <p>Approve User</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/requesters" class="nav-link @yield('title', $four_three_class_active ?? '')"">
                         <i class="nav-icon fas fa-user-plus"></i>
                         <p>Requesters</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="/approval_team" class="nav-link @yield('title', $four_four_class_active ?? '')"">
                         <i class="nav-icon fas fa-check-square"></i>
@@ -224,6 +227,26 @@
               <i class="nav-icon fas fa-bell"></i>
               <p>
                 Production Requests
+              </p>
+            </a>
+          </li>
+          @endif
+          @if ($access_token == "receiver" || $access_token == "admin" || $access_token == "audit")
+          <li class="nav-item">
+            <a href="/donation_history" class="nav-link @yield('title', $zfiveee_class_active ?? '')">
+              <i class="nav-icon fas fa-heart"></i>
+              <p>
+                Donations V2
+              </p>
+            </a>
+          </li>
+          @endif
+          @if ($access_token == "receiver" || $access_token == "admin" || $access_token == "audit")
+          <li class="nav-item">
+            <a href="#" class="nav-link @yield('title', $fiveee_class_active ?? '')">
+              <i class="nav-icon fas fa-medal"></i>
+              <p>
+                QA Check V2
               </p>
             </a>
           </li>

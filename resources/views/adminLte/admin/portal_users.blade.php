@@ -113,11 +113,87 @@
                     </tr>
                   </thead>
                   <tbody>
-                                        <tr>
+                    <tr>
                       <td>1</td>
-                      <td>Vamsi</td>
+                      <td>Hariharan R</td>
+                      <td>hariharan.ramesh@wholesomekids.ca</td>
+                      <td>ADMIN</td>
+                      <td>Active</td>
+                      <td>Hariharan Ramesh</td>
+                      <td>
+                        <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-eye"></i> Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                        <i class="fas fa-print">
+                        </i>
+                        Delete
+                        </a>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Vamsi Mudunuri</td>
                       <td>vamsi.mudunuri@wholesomekids.ca</td>
-                      <td>Receiver</td>
+                      <td>RECEIVER</td>
+                      <td>Active</td>
+                      <td>Hariharan Ramesh</td>
+                      <td>
+                        <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-eye"></i> Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                        <i class="fas fa-print">
+                        </i>
+                        Delete
+                        </a>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Jamey Heaton</td>
+                      <td>jamey.heaton@wholesomekids.ca</td>
+                      <td>AUDIT</td>
+                      <td>Active</td>
+                      <td>Hariharan Ramesh</td>
+                      <td>
+                        <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-eye"></i> Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                        <i class="fas fa-print">
+                        </i>
+                        Delete
+                        </a>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Yong Chen</td>
+                      <td>yong.chen@wholesomekids.ca</td>
+                      <td>REQUESTER</td>
+                      <td>Active</td>
+                      <td>Hariharan Ramesh</td>
+                      <td>
+                        <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-eye"></i> Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                        <i class="fas fa-print">
+                        </i>
+                        Delete
+                        </a>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Nata Taing</td>
+                      <td>nata.taing@wholesomekids.ca</td>
+                      <td>QA</td>
                       <td>Active</td>
                       <td>Hariharan Ramesh</td>
                       <td>

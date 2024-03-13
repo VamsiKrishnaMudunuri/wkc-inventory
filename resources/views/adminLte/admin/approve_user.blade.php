@@ -45,8 +45,8 @@
                   <tbody>
                                         <tr>
                       <td>1</td>
-                      <td>Vamsi</td>
-                      <td>vamsi.mudunuri@wholesomekids.ca</td>
+                      <td>Gokul Krishnan</td>
+                      <td>gokul.krishnan@wholesomekids.ca</td>
                       <td>
                         <select class="form-control" name="product" id="product">
                             <option>Select</option>

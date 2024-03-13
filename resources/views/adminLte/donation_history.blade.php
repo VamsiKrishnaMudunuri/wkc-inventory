@@ -3,13 +3,14 @@
 @section('content')
 
 @php
-   $page_title = "Make An Entry";
-   $five_class_active = "active";
+   $page_title = "Donations History";
+   $zfiveee_class_active = "active";
 @endphp
 
 
+
   <!-- /.content-header -->
-<p style="height: 75px"></p>
+  <p style="height: 75px"></p>
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -31,16 +32,8 @@
                <div class="col-md-6">
 
                  <div class="form-group">
-                   <select class="form-control" name="product" id="product">
-                     <option>Area</option>
-                     <option value="CELCOM">Freezer</option>
-                     <option value="CELCOM">Fridge</option>
-                     <option value="CELCOM">Dry Snacks</option>
-                     <option value="CELCOM">Dry Utensils</option>
-                   </select>
-                 </div>
-
-
+                 <input type="text" class="form-control" id="datepicker" name="from" data-date-format='yyyy-mm-dd' placeholder="FROM" autocomplete="off"/>
+                </div>
 
 
                </div>
@@ -48,15 +41,7 @@
                <div class="col-md-6">
 
                  <div class="form-group">
-                    <select class="form-control" name="product" id="product">
-                        <option>Category</option>
-                        <option value="CELCOM">Milk</option>
-                        <option value="CELCOM">Cheese</option>
-                        <option value="CELCOM">Yogurt</option>
-                        <option value="CELCOM">Veg</option>
-                        <option value="CELCOM">FRT</option>
-                        <option value="CELCOM">Others</option>
-                      </select>
+                 <input type="text" class="form-control" id="datepicker2" name="to" data-date-format='yyyy-mm-dd' placeholder="TO" autocomplete="off"/>
                 </div>
 
                </div>
@@ -65,12 +50,7 @@
             <br>
            </div>
 
-           <div class="col-md-6">
-           <div class="form-group">
-               <input type="text" class="form-control" id="" name="to" placeholder="JF Code" autocomplete="off"/>
-              </div>
 
-          </div>
           <!-- /.row -->
           <hr style="background-color:#f04d23; margin-left: 110px; margin-right: 110px;">
 
@@ -83,6 +63,10 @@
             </div>
         </div>
       </div>
+      <!-- /.card -->
+
+
+      <!-- /.row -->
     </div><!-- /.container-fluid -->
   </div></section>
 
@@ -106,35 +90,36 @@
                   <thead>
                     <tr>
                       <th style="background: #f04d23;color: white;">S.No</th>
-                      <th style="background: #f04d23;color: white;">JF Code</th>
+                      <th style="background: #f04d23;color: white;">Date</th>
                       <th style="background: #f04d23;color: white;">Item</th>
-                      <th style="background: #f04d23;color: white;">System Count</th>
-                      <th style="background: #f04d23;color: white;">Action</th>
+                      <th style="background: #f04d23;color: white;">Qty</th>
+                      <th style="background: #f04d23;color: white;">Donated By</th>
+                      {{-- <th style="background: #f04d23;color: white;">Actions</th> --}}
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>1</td>
-                      <td>1004</td>
-                      <td>Milk - 2%</td>
-                      <td><input type="text" class="form-control" id="" name="to" value="370 BAGS" autocomplete="off" disabled/></td>
-                      <td>
-                        <a class="btn btn-primary btn-sm" href="2">
-                            <i class="fas fa-pencil-alt"></i> Enter
-                        </a>
-                      </td>
+                      <td>02-16-2024</td>
+                      <td>Banana</td>
+                      <td>16CS</td>
+                      <td>Vamsi M</td>
                     </tr>
                     <tr>
                       <td>2</td>
-                      <td>2076</td>
-                      <td>FRT - Pears</td>
-                      <td><input type="text" class="form-control" id="" name="to" value="127 CS" autocomplete="off" disabled/></td>
-                      <td>
-                        <a class="btn btn-primary btn-sm" href="/3">
-                            <i class="fas fa-pencil-alt"></i> Enter
-                        </a>
-                      </td>
+                      <td>02-25-2024</td>
+                      <td>Banana</td>
+                      <td>10CS</td>
+                      <td>Gokul K</td>
                     </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>03-09-2024</td>
+                      <td>Apple Sauce IND</td>
+                      <td>7CS</td>
+                      <td>Vamsi M</td>
+                    </tr>
+
                   </tbody>
                 </table>
             </div>

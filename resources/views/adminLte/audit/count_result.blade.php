@@ -99,11 +99,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                                        <tr>
+                    <tr>
                       <td>1</td>
-                      <td>25-08-2020</td>
-                      <td>audit_result_file01.pdf</td>
-                      <td>Sofia</td>
+                      <td>25-02-2024</td>
+                      <td>audit_result_file_1223232.pdf</td>
+                      <td>Sophia Hamilton</td>
                       <td>
                         <a class="btn btn-primary btn-sm" href="#">
                             <i class="fas fa-print"></i> Print
@@ -114,6 +114,42 @@
                         Download
                         </a>
                       </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>1</td>
+                        <td>28-01-2024</td>
+                        <td>audit_result_file_43432232.pdf</td>
+                        <td>Jamey Heaton</td>
+                        <td>
+                          <a class="btn btn-primary btn-sm" href="#">
+                              <i class="fas fa-print"></i> Print
+                          </a>
+                          <a class="btn btn-success btn-sm" href="#">
+                          <i class="fas fa-download">
+                          </i>
+                          Download
+                          </a>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>1</td>
+                        <td>29-12-2023</td>
+                        <td>audit_result_file_4543345.pdf</td>
+                        <td>Jamey Heaton</td>
+                        <td>
+                          <a class="btn btn-primary btn-sm" href="#">
+                              <i class="fas fa-print"></i> Print
+                          </a>
+                          <a class="btn btn-success btn-sm" href="#">
+                          <i class="fas fa-download">
+                          </i>
+                          Download
+                          </a>
+                        </td>
 
                     </tr>
 

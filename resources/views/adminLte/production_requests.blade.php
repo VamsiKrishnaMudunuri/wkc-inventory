@@ -45,7 +45,7 @@
                       <td>1</td>
                       <td>02-02-2024</td>
                       <td>production_request_file01.pdf</td>
-                      <td>Yonge</td>
+                      <td>Yong</td>
                       <td>
                         <a class="btn btn-primary btn-sm" href="#">
                             <i class="fas fa-print"></i> Print

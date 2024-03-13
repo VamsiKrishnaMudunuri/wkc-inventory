@@ -14,7 +14,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">2% Milk</h1>
+          <h1 class="m-0 text-dark">FRT - Pears</h1>
         </div><!-- /.col -->
         {{-- <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -33,7 +33,7 @@
 
         <div class="card card-info">
         <div class="card-header">
-        <h3 class="card-title">Total Quantity <b style="color: red;">150</b> Bags</h3>
+        <h3 class="card-title">Total Quantity <b style="color: red;">127</b> CS</h3>
         <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
         <i class="fas fa-minus"></i>
@@ -51,8 +51,8 @@
         </thead>
         <tbody>
         <tr>
-        <td>11/10/2023</td>
-        <td>100 Bags</td>
+        <td>03/25/2024</td>
+        <td>70 CS</td>
         <td class="text-right py-0 align-middle">
         {{-- <div class="btn-group btn-group-sm">
         <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
@@ -60,8 +60,8 @@
         </div> --}}
         </td>
         </tr><tr>
-        <td>11/08/2023</td>
-        <td>50 Bags</td>
+        <td>03/27/2024</td>
+        <td>57 CS</td>
         <td class="text-right py-0 align-middle">
         <div class="btn-group btn-group-sm">
         {{-- <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
@@ -90,6 +90,11 @@
     </div>
     </div>
     <div class="card-body" style="display: none;">
+        <div class="form-group">
+            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="background-color:#f04d23;color:white;">
+                Quality Check
+              </button>
+        </div>
         <div class="form-group">
             <label>Date:</label>
             <div class="input-group date" id="reservationdate" data-target-input="nearest">
@@ -299,5 +304,25 @@
     </div>
     </div>
     </section>
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Pears Acceptance Criteria</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <h3 style="color: green;">Accept</h3>
+                    <img style="inline-size: -webkit-fill-available;" src="{{ asset('/images/good.png') }}" alt="">
+                </br>
+                    <h3 style="color:red;">Do Not Accept</h3>
+                    <img style="inline-size: -webkit-fill-available;" src="{{ asset('/images/bad.png') }}" alt="">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
   @endsection
