@@ -270,7 +270,7 @@
 
     function login(){
         if(document.getElementById("password").value == "12345"){
-            if(document.getElementById("userName").value == "admin" || document.getElementById("userName").value == "audit" || document.getElementById("userName").value == "receiver" ||document.getElementById("requester").value == "requester"){
+            if(document.getElementById("userName").value == "admin" || document.getElementById("userName").value == "audit" || document.getElementById("userName").value == "receiver" ||document.getElementById("userName").value == "requester"){
 
                 var jsonData = JSON.stringify({
                 'access_token': document.getElementById("userName").value
