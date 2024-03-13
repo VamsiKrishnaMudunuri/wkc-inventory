@@ -201,7 +201,7 @@
             </ul>
           </li>
           @endif
-          @if ($access_token == "requester" || $access_token == "admin")
+          @if ($access_token == "requester" || $access_token == "admin" || $access_token == "requester")
           <li class="nav-item">
             <a href="/request" class="nav-link @yield('title', $fivee_class_active ?? '')">
               <i class="nav-icon fas fa-bullhorn"></i>
@@ -221,7 +221,7 @@
             </a>
           </li>
           @endif
-          @if ($access_token == "receiver" || $access_token == "admin")
+          @if ($access_token == "receiver" || $access_token == "admin" || $access_token == "requester")
           <li class="nav-item">
             <a href="/production_requests" class="nav-link @yield('title', $fiveee_class_active ?? '')">
               <i class="nav-icon fas fa-bell"></i>
@@ -276,7 +276,7 @@
           </li>
 
 
-          @if ($access_token == "audit" || $access_token == "admin")
+          @if ($access_token == "audit" || $access_token == "admin" || $access_token == "requester")
           <li class="nav-item">
             <a href="/inventory_data" class="nav-link @yield('title', $eight_class_active ?? '')">
               <i class="nav-icon fas fa-list-alt"></i>
@@ -287,7 +287,7 @@
             </a>
           </li>
           @endif
-          @if ($access_token == "receiver" || $access_token == "admin" || $access_token == "requester")
+          @if ($access_token == "receiver" || $access_token == "admin" || $access_token == "requester" || $access_token == "requester")
           <li class="nav-item">
             <a href="/history" class="nav-link @yield('title', $seven_class_active ?? '')">
               <i class="nav-icon fas fa-history"></i>
