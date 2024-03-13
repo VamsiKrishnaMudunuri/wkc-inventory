@@ -167,7 +167,22 @@
                     </tr>
                   </thead>
                   <tbody>
-                                        <tr>
+                    <tr>
+                      <td>1</td>
+                      <td>1003</td>
+                      <td>Yogurt - Peach</td>
+                      <td>Provider Name</td>
+                      <td>CS</td>
+                      {{-- <td><button name=""   id="myBtn" class="btn" style="background-color:#f04d23;color:white;" >
+                        EDIT
+                        </button></td> --}}
+                        <td>
+                            <button type="button" class="btn" style="background-color:#f04d23;color:white;">
+                                EDIT
+                              </button>
+                        </td>
+                    </tr>
+                    <tr>
                       <td>1</td>
                       <td>1004</td>
                       <td>Milk 2%</td>
@@ -181,7 +196,21 @@
                                 EDIT
                               </button>
                         </td>
-
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>1005</td>
+                      <td>Margarine</td>
+                      <td>Provider Name</td>
+                      <td>PAIL</td>
+                      {{-- <td><button name=""   id="myBtn" class="btn" style="background-color:#f04d23;color:white;" >
+                        EDIT
+                        </button></td> --}}
+                        <td>
+                            <button type="button" class="btn" style="background-color:#f04d23;color:white;">
+                                EDIT
+                              </button>
+                        </td>
                     </tr>
 
                   </tbody>
