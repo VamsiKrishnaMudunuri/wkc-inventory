@@ -1,0 +1,8 @@
+{
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "all",
+    "trailingCommaPHP": true,
+    "phpVersion": "8.3",
+    "plugins": ["./node_modules/@prettier/plugin-php"]
+}

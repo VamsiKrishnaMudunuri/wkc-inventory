@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the Carbon package.
  *
@@ -8,14 +10,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Carbon\Traits;
 
 use Carbon\CarbonConverterInterface;
 use Carbon\CarbonInterface;
 use Carbon\CarbonInterval;
+use Carbon\Exceptions\InvalidFormatException;
+use Carbon\Exceptions\InvalidIntervalException;
 use Carbon\Exceptions\UnitException;
+use Carbon\Exceptions\UnsupportedUnitException;
+use Carbon\Unit;
 use Closure;
 use DateInterval;
+use DateMalformedStringException;
+use ReturnTypeWillChange;
 
 /**
  * Trait Units.
@@ -28,13 +37,15 @@ trait Units
      * Add seconds to the instance using timestamp. Positive $value travels
      * forward while negative $value travels into the past.
      *
-     * @param string $unit
-     * @param int    $value
+     * @param string         $unit
+     * @param int|float|null $value
      *
      * @return static
      */
-    public function addRealUnit($unit, $value = 1)
+    public function addRealUnit(string $unit, $value = 1): static
     {
+        $value ??= 0;
+
         switch ($unit) {
             // @call addRealUnit
             case 'micro':
@@ -47,18 +58,16 @@ trait Units
                 $seconds = (int) floor($diff / static::MICROSECONDS_PER_SECOND);
                 $time += $seconds;
                 $diff -= $seconds * static::MICROSECONDS_PER_SECOND;
-                $microtime = str_pad("$diff", 6, '0', STR_PAD_LEFT);
-                $tz = $this->tz;
+                $microtime = str_pad((string) $diff, 6, '0', STR_PAD_LEFT);
+                $timezone = $this->tz;
 
-                return $this->tz('UTC')->modify("@$time.$microtime")->tz($tz);
+                return $this->tz('UTC')->modify("@$time.$microtime")->setTimezone($timezone);
 
             // @call addRealUnit
             case 'milli':
             // @call addRealUnit
             case 'millisecond':
                 return $this->addRealUnit('microsecond', $value * static::MICROSECONDS_PER_MILLISECOND);
-
-                break;
 
             // @call addRealUnit
             case 'second':
@@ -125,18 +134,32 @@ trait Units
                 break;
 
             default:
-                if ($this->localStrictModeEnabled ?? static::isStrictModeEnabled()) {
+                if ($this->isLocalStrictModeEnabled()) {
                     throw new UnitException("Invalid unit for real timestamp add/sub: '$unit'");
                 }
 
                 return $this;
         }
 
-        /* @var CarbonInterface $this */
-        return $this->setTimestamp((int) ($this->getTimestamp() + $value));
+        $seconds = (int) $value;
+        $microseconds = (int) round(
+            (abs($value) - abs($seconds)) * ($value < 0 ? -1 : 1) * static::MICROSECONDS_PER_SECOND,
+        );
+        $date = $this->setTimestamp($this->getTimestamp() + $seconds);
+
+        return $microseconds ? $date->addRealUnit('microsecond', $microseconds) : $date;
     }
 
-    public function subRealUnit($unit, $value = 1)
+    /**
+     * Subtract seconds to the instance using timestamp. Positive $value travels
+     * into the past while negative $value travels forward.
+     *
+     * @param string $unit
+     * @param int    $value
+     *
+     * @return static
+     */
+    public function subRealUnit($unit, $value = 1): static
     {
         return $this->addRealUnit($unit, -$value);
     }
@@ -148,7 +171,7 @@ trait Units
      *
      * @return bool
      */
-    public static function isModifiableUnit($unit)
+    public static function isModifiableUnit($unit): bool
     {
         static $modifiableUnits = [
             // @call addUnit
@@ -165,7 +188,7 @@ trait Units
             'weekday',
         ];
 
-        return in_array($unit, $modifiableUnits) || in_array($unit, static::$units);
+        return \in_array($unit, $modifiableUnits, true) || \in_array($unit, static::$units, true);
     }
 
     /**
@@ -175,7 +198,7 @@ trait Units
      *
      * @return static
      */
-    public function rawAdd(DateInterval $interval)
+    public function rawAdd(DateInterval $interval): static
     {
         return parent::add($interval);
     }
@@ -187,24 +210,34 @@ trait Units
      * @example $date->add(15, 'days')
      * @example $date->add(CarbonInterval::days(4))
      *
-     * @param string|DateInterval|Closure|CarbonConverterInterface $unit
-     * @param int                                                  $value
-     * @param bool|null                                            $overflow
+     * @param Unit|string|DateInterval|Closure|CarbonConverterInterface $unit
+     * @param int|float                                                 $value
+     * @param bool|null                                                 $overflow
      *
      * @return static
      */
-    public function add($unit, $value = 1, $overflow = null)
+    #[ReturnTypeWillChange]
+    public function add($unit, $value = 1, ?bool $overflow = null): static
     {
-        if (is_string($unit) && func_num_args() === 1) {
-            $unit = CarbonInterval::make($unit);
+        $unit = Unit::toNameIfUnit($unit);
+        $value = Unit::toNameIfUnit($value);
+
+        if (\is_string($unit) && \func_num_args() === 1) {
+            $unit = CarbonInterval::make($unit, [], true);
         }
 
         if ($unit instanceof CarbonConverterInterface) {
-            return $this->resolveCarbon($unit->convertDate($this, false));
+            $unit = Closure::fromCallable([$unit, 'convertDate']);
         }
 
         if ($unit instanceof Closure) {
-            return $this->resolveCarbon($unit($this, false));
+            $result = $this->resolveCarbon($unit($this, false));
+
+            if ($this !== $result && $this->isMutable()) {
+                return $this->setDateTimeFrom($result);
+            }
+
+            return $result;
         }
 
         if ($unit instanceof DateInterval) {
@@ -215,26 +248,25 @@ trait Units
             [$value, $unit] = [$unit, $value];
         }
 
-        return $this->addUnit($unit, $value, $overflow);
+        return $this->addUnit((string) $unit, $value, $overflow);
     }
 
     /**
      * Add given units to the current instance.
-     *
-     * @param string    $unit
-     * @param int       $value
-     * @param bool|null $overflow
-     *
-     * @return static
      */
-    public function addUnit($unit, $value = 1, $overflow = null)
+    public function addUnit(Unit|string $unit, $value = 1, ?bool $overflow = null): static
     {
+        $unit = Unit::toName($unit);
+
+        $originalArgs = \func_get_args();
+
         $date = $this;
 
-        if (!is_numeric($value) || !floatval($value)) {
+        if (!is_numeric($value) || !(float) $value) {
             return $date->isMutable() ? $date : $date->copy();
         }
 
+        $unit = self::singularUnit($unit);
         $metaUnits = [
             'millennium' => [static::YEARS_PER_MILLENNIUM, 'year'],
             'century' => [static::YEARS_PER_CENTURY, 'year'],
@@ -248,19 +280,19 @@ trait Units
         }
 
         if ($unit === 'weekday') {
-            $weekendDays = static::getWeekendDays();
+            $weekendDays = $this->transmitFactory(static fn () => static::getWeekendDays());
 
             if ($weekendDays !== [static::SATURDAY, static::SUNDAY]) {
                 $absoluteValue = abs($value);
                 $sign = $value / max(1, $absoluteValue);
-                $weekDaysCount = 7 - min(6, count(array_unique($weekendDays)));
+                $weekDaysCount = static::DAYS_PER_WEEK - min(static::DAYS_PER_WEEK - 1, \count(array_unique($weekendDays)));
                 $weeks = floor($absoluteValue / $weekDaysCount);
 
                 for ($diff = $absoluteValue % $weekDaysCount; $diff; $diff--) {
                     /** @var static $date */
                     $date = $date->addDays($sign);
 
-                    while (in_array($date->dayOfWeek, $weekendDays)) {
+                    while (\in_array($date->dayOfWeek, $weekendDays, true)) {
                         $date = $date->addDays($sign);
                     }
                 }
@@ -270,71 +302,55 @@ trait Units
             }
 
             $timeString = $date->toTimeString();
-        } elseif ($canOverflow = in_array($unit, [
+        } elseif ($canOverflow = (\in_array($unit, [
                 'month',
                 'year',
             ]) && ($overflow === false || (
                 $overflow === null &&
                 ($ucUnit = ucfirst($unit).'s') &&
                 !($this->{'local'.$ucUnit.'Overflow'} ?? static::{'shouldOverflow'.$ucUnit}())
-            ))) {
+            )))) {
             $day = $date->day;
         }
-
-        $value = (int) $value;
 
         if ($unit === 'milli' || $unit === 'millisecond') {
             $unit = 'microsecond';
             $value *= static::MICROSECONDS_PER_MILLISECOND;
         }
 
-        // Work-around for bug https://bugs.php.net/bug.php?id=75642
-        if ($unit === 'micro' || $unit === 'microsecond') {
-            $microseconds = $this->micro + $value;
-            $second = (int) floor($microseconds / static::MICROSECONDS_PER_SECOND);
-            $microseconds %= static::MICROSECONDS_PER_SECOND;
-            if ($microseconds < 0) {
-                $microseconds += static::MICROSECONDS_PER_SECOND;
+        $previousException = null;
+
+        try {
+            $date = self::rawAddUnit($date, $unit, $value);
+
+            if (isset($timeString)) {
+                $date = $date?->setTimeFromTimeString($timeString);
+            } elseif (isset($canOverflow, $day) && $canOverflow && $day !== $date?->day) {
+                $date = $date?->modify('last day of previous month');
             }
-            $date = $date->microseconds($microseconds);
-            $unit = 'second';
-            $value = $second;
-        }
-        $date = $date->modify("$value $unit");
-
-        if (isset($timeString)) {
-            return $date->setTimeFromTimeString($timeString);
+        } catch (DateMalformedStringException|InvalidFormatException|UnsupportedUnitException $exception) {
+            $date = null;
+            $previousException = $exception;
         }
 
-        if (isset($canOverflow, $day) && $canOverflow && $day !== $date->day) {
-            $date = $date->modify('last day of previous month');
-        }
-
-        return $date;
+        return $date ?? throw new UnitException(
+            'Unable to add unit '.var_export($originalArgs, true),
+            previous: $previousException,
+        );
     }
 
     /**
      * Subtract given units to the current instance.
-     *
-     * @param string    $unit
-     * @param int       $value
-     * @param bool|null $overflow
-     *
-     * @return static
      */
-    public function subUnit($unit, $value = 1, $overflow = null)
+    public function subUnit(Unit|string $unit, $value = 1, ?bool $overflow = null): static
     {
         return $this->addUnit($unit, -$value, $overflow);
     }
 
     /**
      * Call native PHP DateTime/DateTimeImmutable sub() method.
-     *
-     * @param DateInterval $interval
-     *
-     * @return static
      */
-    public function rawSub(DateInterval $interval)
+    public function rawSub(DateInterval $interval): static
     {
         return parent::sub($interval);
     }
@@ -346,24 +362,31 @@ trait Units
      * @example $date->sub(15, 'days')
      * @example $date->sub(CarbonInterval::days(4))
      *
-     * @param string|DateInterval|Closure|CarbonConverterInterface $unit
-     * @param int                                                  $value
-     * @param bool|null                                            $overflow
+     * @param Unit|string|DateInterval|Closure|CarbonConverterInterface $unit
+     * @param int|float                                                 $value
+     * @param bool|null                                                 $overflow
      *
      * @return static
      */
-    public function sub($unit, $value = 1, $overflow = null)
+    #[ReturnTypeWillChange]
+    public function sub($unit, $value = 1, ?bool $overflow = null): static
     {
-        if (is_string($unit) && func_num_args() === 1) {
-            $unit = CarbonInterval::make($unit);
+        if (\is_string($unit) && \func_num_args() === 1) {
+            $unit = CarbonInterval::make($unit, [], true);
         }
 
         if ($unit instanceof CarbonConverterInterface) {
-            return $this->resolveCarbon($unit->convertDate($this, true));
+            $unit = Closure::fromCallable([$unit, 'convertDate']);
         }
 
         if ($unit instanceof Closure) {
-            return $this->resolveCarbon($unit($this, true));
+            $result = $this->resolveCarbon($unit($this, true));
+
+            if ($this !== $result && $this->isMutable()) {
+                return $this->setDateTimeFrom($result);
+            }
+
+            return $result;
         }
 
         if ($unit instanceof DateInterval) {
@@ -374,7 +397,7 @@ trait Units
             [$value, $unit] = [$unit, $value];
         }
 
-        return $this->addUnit($unit, -floatval($value), $overflow);
+        return $this->addUnit((string) $unit, -(float) $value, $overflow);
     }
 
     /**
@@ -383,17 +406,32 @@ trait Units
      * @see sub()
      *
      * @param string|DateInterval $unit
-     * @param int                 $value
+     * @param int|float           $value
      * @param bool|null           $overflow
      *
      * @return static
      */
-    public function subtract($unit, $value = 1, $overflow = null)
+    public function subtract($unit, $value = 1, ?bool $overflow = null): static
     {
-        if (is_string($unit) && func_num_args() === 1) {
-            $unit = CarbonInterval::make($unit);
+        if (\is_string($unit) && \func_num_args() === 1) {
+            $unit = CarbonInterval::make($unit, [], true);
         }
 
         return $this->sub($unit, $value, $overflow);
+    }
+
+    private static function rawAddUnit(self $date, string $unit, int|float $value): ?static
+    {
+        try {
+            return $date->rawAdd(
+                CarbonInterval::fromString(abs($value)." $unit")->invert($value < 0),
+            );
+        } catch (InvalidIntervalException $exception) {
+            try {
+                return $date->modify("$value $unit");
+            } catch (InvalidFormatException) {
+                throw new UnsupportedUnitException($unit, previous: $exception);
+            }
+        }
     }
 }

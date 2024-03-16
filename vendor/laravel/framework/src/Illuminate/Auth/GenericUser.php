@@ -41,9 +41,17 @@ class GenericUser implements UserContract
      */
     public function getAuthIdentifier()
     {
-        $name = $this->getAuthIdentifierName();
+        return $this->attributes[$this->getAuthIdentifierName()];
+    }
 
-        return $this->attributes[$name];
+    /**
+     * Get the name of the password attribute for the user.
+     *
+     * @return string
+     */
+    public function getAuthPasswordName()
+    {
+        return 'password';
     }
 
     /**
