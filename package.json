@@ -3,15 +3,18 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "format": "npx prettier --write resources/",
+        "prettier": "prettier"
     },
     "devDependencies": {
         "@prettier/plugin-php": "^0.22.2",
+        "@shufo/prettier-plugin-blade": "^1.14.1",
         "axios": "^1.6.8",
         "laravel-vite-plugin": "^1.0.2",
+        "prettier": "^3.2.5",
+        "prettier-plugin-blade": "^2.1.7",
+        "prettier-plugin-tailwindcss": "^0.5.12",
         "vite": "^5.1.6"
-    },
-    "dependencies": {
-        "prettier": "^3.2.5"
     }
 }
