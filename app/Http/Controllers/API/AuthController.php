@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Traits\CustomException;
 use App\Traits\PhoneNumber;
 use App\Models\User;
+use App\Models\UserRole;
 
 class AuthController extends Controller
 {
@@ -22,7 +23,7 @@ class AuthController extends Controller
     {
     }
 
-    public function doRegister(Request $request)
+    public function doLogin(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -101,6 +102,40 @@ class AuthController extends Controller
             ];
 
             return response()->json($rsp, 200, []);
+        } catch (Exception $e) {
+            return $this->generateApiError($e->getMessage());
+        }
+    }
+
+    public function registerOption(Request $request)
+    {
+        try {
+            $userRoles = UserRole::select(['id', 'name'])
+                ->where('id', '!=', 'SUPER_ADMIN')
+                ->get();
+
+            $rsp = [
+                'message' => 'success',
+                'user_roles' => $userRoles,
+            ];
+
+            return response()->json($rsp, 200, []);
+        } catch (Exception $e) {
+            return $this->generateApiError($e->getMessage());
+        }
+    }
+
+    public function doRegister(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'mobile' => 'required|numeric|min:1|max:20',
+                'email' => 'required|email|min:1|max:200',
+            ]);
+
+            if ($validator->fails()) {
+                throw new Exception($validator->errors()->all()[0]);
+            }
         } catch (Exception $e) {
             return $this->generateApiError($e->getMessage());
         }

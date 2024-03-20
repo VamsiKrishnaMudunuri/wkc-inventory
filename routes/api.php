@@ -11,42 +11,11 @@ Route::get('/user', function (Request $request) {
 
 Route::group(
     [
-        'prefix' => '/v1/registers',
+        'prefix' => '/v1/auth',
         'middleware' => [],
     ],
     function () {
-        Route::post('/', [AuthController::class, 'doRegister']);
+        Route::post('/login', [AuthController::class, 'doLogin']);
+        Route::post('/register', [AuthController::class, 'doRegister']);
     },
 );
-
-// Route::fallback(function () {
-//     $status = 400;
-//     $data = [
-//         'error' => [
-//             'code' => '1',
-//             'name' => 'PAGE_NOT_FOUND',
-//             'message_lang' => [
-//                 'en' => 'Page Not Found',
-//             ],
-//             'info' => null,
-//         ],
-//     ];
-
-//     return response()->json($data, $status);
-// });
-
-Route::any('{url?}/{sub_url?}', function () {
-    $status = 400;
-    $data = [
-        'error' => [
-            'code' => '1',
-            'name' => 'PAGE_NOT_FOUND',
-            'message_lang' => [
-                'en' => 'Page Not Found',
-            ],
-            'info' => null,
-        ],
-    ];
-
-    return response()->json($data, $status);
-});

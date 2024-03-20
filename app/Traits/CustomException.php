@@ -22,7 +22,8 @@ trait CustomException
         ];
         $findMessage = $this->findErrorMessageByMessage($message);
         if ($findMessage) {
-            $data['error'] = $findMessage;
+            $data['error'] = $findMessage['messageCollection'];
+            $status = $findMessage['status'];
         }
 
         return response()->json($data, $status);
@@ -32,6 +33,7 @@ trait CustomException
     {
         $errorMessageCollections = Collection::make([
             [
+                'status' => 400,
                 'code' => '0',
                 'name' => 'UNKNOWN_ERROR',
                 'default_name' => 'Unknown Error',
@@ -41,6 +43,7 @@ trait CustomException
                 'info' => null,
             ],
             [
+                'status' => 404,
                 'code' => '1',
                 'name' => 'PAGE_NOT_FOUND',
                 'default_name' => 'Page Not Found',
@@ -50,6 +53,7 @@ trait CustomException
                 'info' => null,
             ],
             [
+                'status' => 400,
                 'code' => '2',
                 'name' => 'UNAUTHORIZED',
                 'default_name' => 'Unauthorized',
@@ -59,6 +63,7 @@ trait CustomException
                 'info' => null,
             ],
             [
+                'status' => 400,
                 'code' => '10001',
                 'name' => 'LOGIN_ID_REQUIRED',
                 'default_name' => 'The login id field is required.',
@@ -68,6 +73,7 @@ trait CustomException
                 'info' => null,
             ],
             [
+                'status' => 400,
                 'code' => '10002',
                 'name' => 'PASSWORD_REQUIRED',
                 'default_name' => 'The password field is required.',
@@ -77,6 +83,7 @@ trait CustomException
                 'info' => null,
             ],
             [
+                'status' => 400,
                 'code' => '10003',
                 'name' => 'LOGIN_ID_AND_PASSWORD_COMBINATION_INVALID',
                 'default_name' => '',
@@ -93,6 +100,7 @@ trait CustomException
     public function findErrorMessageByMessage($msg)
     {
         $messageCollection = null;
+        $status = 400;
         try {
             $collections = $this->getErrorMessages();
             $messageCollection = $collections
@@ -108,8 +116,13 @@ trait CustomException
         } catch (Exception $e) {
         }
         if ($messageCollection) {
+            $status = $messageCollection['status'];
             unset($messageCollection['default_name']);
+            unset($messageCollection['status']);
         }
-        return $messageCollection;
+        return [
+            'messageCollection' => $messageCollection,
+            'status' => $status,
+        ];
     }
 }
