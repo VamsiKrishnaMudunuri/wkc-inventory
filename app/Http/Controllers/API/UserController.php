@@ -428,6 +428,10 @@ class UserController extends Controller
                     throw new Exception('USER_STATUS_ALREADY_UPDATED');
                 }
 
+                if ($user->register_status !== 'APPROVED') {
+                    throw new Exception('USER_REGISTER_STATUS_NOT_APPROVED');
+                }
+
                 if (
                     $user->role_id == 'ADMIN' &&
                     (string) $user->id !== (string) $request->middleware->userId
