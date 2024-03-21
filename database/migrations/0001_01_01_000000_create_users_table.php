@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->string('id', 100)->primary();
             $table->string('name', 255);
+            $table->boolean('is_show')->default(true)->index();
         });
 
         Schema::create('user_abilities', function (Blueprint $table) {
@@ -22,6 +23,7 @@ return new class extends Migration {
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->uuid('ext_id')->unique();
             $table->string('name');
             $table->string('mobile')->unique();
             $table->string('email')->unique();
@@ -41,6 +43,7 @@ return new class extends Migration {
             $table->id();
             $table->string('role_id', 100);
             $table->string('ability_id', 100);
+            $table->boolean('is_enable')->default(true)->index();
             $table->foreign('role_id')->references('id')->on('user_roles');
             $table
                 ->foreign('ability_id')

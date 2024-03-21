@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Carbon;
 
 return new class extends Migration {
     /**
@@ -16,14 +14,20 @@ return new class extends Migration {
             [
                 'id' => 'SUPER_ADMIN',
                 'name' => 'Super Admin',
+                'is_show' => false,
             ],
             [
                 'id' => 'ADMIN',
                 'name' => 'Administrator',
+                'is_show' => true,
             ],
         ]);
 
         DB::table('user_abilities')->insert([
+            [
+                'id' => 'VIEW_USERS',
+                'name' => 'View Users',
+            ],
             [
                 'id' => 'UPDATE_USER',
                 'name' => 'Update User',
@@ -41,40 +45,38 @@ return new class extends Migration {
         DB::table('user_role_abilities')->insert([
             [
                 'role_id' => 'SUPER_ADMIN',
+                'ability_id' => 'VIEW_USERS',
+                'is_enable' => true,
+            ],
+            [
+                'role_id' => 'SUPER_ADMIN',
                 'ability_id' => 'UPDATE_USER_ADMIN',
+                'is_enable' => true,
             ],
             [
                 'role_id' => 'SUPER_ADMIN',
                 'ability_id' => 'UPDATE_USER',
+                'is_enable' => true,
             ],
             [
                 'role_id' => 'SUPER_ADMIN',
                 'ability_id' => 'APPROVE_USER',
+                'is_enable' => true,
+            ],
+            [
+                'role_id' => 'ADMIN',
+                'ability_id' => 'VIEW_USERS',
+                'is_enable' => true,
             ],
             [
                 'role_id' => 'ADMIN',
                 'ability_id' => 'UPDATE_USER',
+                'is_enable' => true,
             ],
             [
                 'role_id' => 'ADMIN',
                 'ability_id' => 'APPROVE_USER',
-            ],
-        ]);
-
-        DB::table('users')->insert([
-            [
-                'id' => '1',
-                'name' => 'Super Admin',
-                'mobile' => '16475555678',
-                'email' => 'admin@test.com',
-                'password' => Hash::make('123456'),
-                'register_status' => 'APPROVED',
-                'register_status_updated_at' => Carbon::now(),
-                'status' => 'ENABLE',
-                'role_id' => 'SUPER_ADMIN',
-                'remember_token' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'is_enable' => true,
             ],
         ]);
     }
