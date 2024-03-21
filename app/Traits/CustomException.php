@@ -331,6 +331,26 @@ trait CustomException
                 ],
                 'info' => null,
             ],
+            [
+                'status' => 400,
+                'code' => '10025',
+                'name' => 'USER_ID_INVALID',
+                'default_name' => '',
+                'message_lang' => [
+                    'en' => 'Invalid User ID',
+                ],
+                'info' => null,
+            ],
+            [
+                'status' => 400,
+                'code' => '10026',
+                'name' => 'USER_ROLE_ALREADY_UPDATED',
+                'default_name' => '',
+                'message_lang' => [
+                    'en' => 'User Role Already Updated',
+                ],
+                'info' => null,
+            ],
         ]);
 
         return $errorMessageCollections;

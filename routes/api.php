@@ -27,5 +27,32 @@ Route::prefix('/v1/auth')
 Route::prefix('/v1/users')
     ->middleware([ForceJson::class, AuthAPI::class])
     ->group(function () {
-        Route::get('/', [UserController::class, 'getUsers']);
+        Route::get('/', [UserController::class, 'getUsers'])->middleware([
+            'ability:VIEW_USER',
+        ]);
+
+        Route::get('/options', [
+            UserController::class,
+            'getUsersOptions',
+        ])->middleware(['ability:VIEW_USER']);
+
+        Route::put('/{user_id}/update', [
+            UserController::class,
+            'updateUserById',
+        ])->middleware(['ability:UPDATE_USER']);
+
+        Route::put('{user_id}/roles', [
+            UserController::class,
+            'updateUserRoleById',
+        ])->middleware(['ability:UPDATE_USER_ROLE']);
+
+        Route::put('{user_id}/registers/status', [
+            UserController::class,
+            'updateUserRegisterStatusById',
+        ])->middleware(['ability:APPROVE_USER']);
+
+        Route::put('{user_id}/status', [
+            UserController::class,
+            'updateUserStatusById',
+        ])->middleware(['ability:UPDATE_USER']);
     });

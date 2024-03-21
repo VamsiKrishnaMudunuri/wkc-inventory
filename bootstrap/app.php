@@ -8,6 +8,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Helper\ErrorHelperController;
 use Illuminate\Auth\AuthenticationException;
+use App\Http\Middleware\CheckForAnyAbility;
+use App\Http\Middleware\CheckAbilities;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -34,6 +36,11 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\SetDefaultLocaleForUrls::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Auth\Middleware\Authorize::class,
+        ]);
+
+        $middleware->alias([
+            'ability' => CheckForAnyAbility::class,
+            'abilities' => CheckAbilities::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -25,8 +25,8 @@ return new class extends Migration {
 
         DB::table('user_abilities')->insert([
             [
-                'id' => 'VIEW_USERS',
-                'name' => 'View Users',
+                'id' => 'VIEW_USER',
+                'name' => 'View User',
             ],
             [
                 'id' => 'UPDATE_USER',
@@ -40,12 +40,29 @@ return new class extends Migration {
                 'id' => 'APPROVE_USER',
                 'name' => 'Approve User',
             ],
+            [
+                'id' => 'APPROVE_USER_ADMIN',
+                'name' => 'Approve User Admin',
+            ],
+            [
+                'id' => 'UPDATE_USER_ROLE',
+                'name' => 'Approve User Role',
+            ],
+            [
+                'id' => 'UPDATE_USER_ADMIN_ROLE',
+                'name' => 'Approve User Admin Role',
+            ],
         ]);
 
         DB::table('user_role_abilities')->insert([
             [
                 'role_id' => 'SUPER_ADMIN',
-                'ability_id' => 'VIEW_USERS',
+                'ability_id' => 'VIEW_USER',
+                'is_enable' => true,
+            ],
+            [
+                'role_id' => 'SUPER_ADMIN',
+                'ability_id' => 'UPDATE_USER',
                 'is_enable' => true,
             ],
             [
@@ -55,17 +72,28 @@ return new class extends Migration {
             ],
             [
                 'role_id' => 'SUPER_ADMIN',
-                'ability_id' => 'UPDATE_USER',
+                'ability_id' => 'APPROVE_USER',
                 'is_enable' => true,
             ],
             [
                 'role_id' => 'SUPER_ADMIN',
-                'ability_id' => 'APPROVE_USER',
+                'ability_id' => 'APPROVE_USER_ADMIN',
                 'is_enable' => true,
             ],
             [
+                'role_id' => 'SUPER_ADMIN',
+                'ability_id' => 'UPDATE_USER_ROLE',
+                'is_enable' => true,
+            ],
+            [
+                'role_id' => 'SUPER_ADMIN',
+                'ability_id' => 'UPDATE_USER_ADMIN_ROLE',
+                'is_enable' => true,
+            ],
+
+            [
                 'role_id' => 'ADMIN',
-                'ability_id' => 'VIEW_USERS',
+                'ability_id' => 'VIEW_USER',
                 'is_enable' => true,
             ],
             [
@@ -76,6 +104,11 @@ return new class extends Migration {
             [
                 'role_id' => 'ADMIN',
                 'ability_id' => 'APPROVE_USER',
+                'is_enable' => true,
+            ],
+            [
+                'role_id' => 'ADMIN',
+                'ability_id' => 'UPDATE_USER_ROLE',
                 'is_enable' => true,
             ],
         ]);
